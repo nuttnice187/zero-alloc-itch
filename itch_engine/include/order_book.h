@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <array>
+#include <iostream>
 
 // Ensure strict network alignment boundary maps
 #pragma pack(push, 1)
