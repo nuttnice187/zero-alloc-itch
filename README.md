@@ -7,6 +7,7 @@ sudo apt-get update
 sudo apt-get install -y build-essential
 git clone https://github.com/nuttnice187/zero-alloc-itch.git
 cd zero-alloc-itch/itch_engine/
+python3 generate_mock_data.py #optionally generate mock data
 make
 ./bin/itch_engine data/sample_itch_data.bin
 ```
