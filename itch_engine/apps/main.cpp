@@ -1,5 +1,8 @@
 #include "parser.h"
+#include "order_book.h"
 #include <iostream>
+
+extern LimitOrderBook order_book;
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -16,5 +19,7 @@ int main(int argc, char* argv[]) {
     engine.parse_stream();
     std::cout << "[+] Stream parsing complete." << std::endl;
 
+    order_book.print_top_of_book();
+    
     return 0;
 }

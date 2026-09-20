@@ -73,4 +73,46 @@ public:
             }
         }
     }
+    
+    void print_top_of_book() const {
+        if (active_bids == 0 && active_asks == 0) {
+            std::cout << "[Book Status] No active levels recorded." << std::endl;
+            return;
+        }
+
+        uint32_t best_bid = 0;
+        uint32_t bid_vol = 0;
+        // Linear scan over active cache blocks to find max bid price
+        for (size_t i = 0; i < active_bids; ++i) {
+            if (bid_levels[i].price > best_bid) {
+                best_bid = bid_levels[i].price;
+                bid_vol = bid_levels[i].total_volume;
+            }
+        }
+
+        uint32_t best_ask = 0xFFFFFFFF; // Initialize to max int bounds
+        uint32_t ask_vol = 0;
+        // Linear scan over active cache blocks to find min ask price
+        for (size_t i = 0; i < active_asks; ++i) {
+            if (ask_levels[i].price < best_ask) {
+                best_ask = ask_levels[i].price;
+                ask_vol = ask_levels[i].total_volume;
+            }
+        }
+
+        std::cout << "\n=============================================" << std::endl;
+        std::cout << "        LIMIT ORDER BOOK TOP METRICS         " << std::endl;
+        std::cout << "=============================================" << std::endl;
+        if (active_bids > 0) {
+            std::cout << " BEST BID (BUY)  : $" << (best_bid / 100.0) << " | Volume: " << bid_vol << std::endl;
+        } else {
+            std::cout << " BEST BID (BUY)  : NO DATA" << std::endl;
+        }
+        if (active_asks > 0 && best_ask != 0xFFFFFFFF) {
+            std::cout << " BEST ASK (SELL) : $" << (best_ask / 100.0) << " | Volume: " << ask_vol << std::endl;
+        } else {
+            std::cout << " BEST ASK (SELL) : NO DATA" << std::endl;
+        }
+        std::cout << "=============================================\n" << std::endl;
+    }
 };
